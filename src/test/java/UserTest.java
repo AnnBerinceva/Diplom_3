@@ -12,34 +12,31 @@ import pageobject.StartPage;
 import static org.junit.Assert.assertEquals;
 
 public class UserTest {
-    WebDriverCreator webDriverCreator = new WebDriverCreator();
-
-    private RegisterPage objRegisterPage;
     private LoginPage objLoginPage;
     private StartPage objStartPage;
     private WebDriver driver;
-    private String name;
     private String email;
     private String password;
+    String accessToken;
 
     @Before
     public void before() {
-        driver = webDriverCreator.createWebDriver();
+        driver = WebDriverCreator.createWebDriver();
 
 
         UserData userData = new UserData();
-        name = userData.getRandomName();
+        String name = userData.getRandomName();
         email = userData.getRandomEmail();
         password = userData.getRandomPassword();
-        objRegisterPage = new RegisterPage(driver);// создание объекта класса страницы регистрации
+        RegisterPage objRegisterPage = new RegisterPage(driver);
         objRegisterPage.openRegisterPage();
         objRegisterPage.createUser(name,email,password);
         objLoginPage = new LoginPage(driver);
-        objStartPage = new StartPage(driver);// создание объекта класса main страницы
+        objStartPage = new StartPage(driver);
     }
 
     @Test
-    @DisplayName("Вход в личный кабинет")
+    @DisplayName("Login to personal account")
     public void personalAccountTest() {
         objLoginPage.login(email, password);
         objStartPage.checkPersonalArea();
@@ -48,7 +45,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("Выход из личного кабинета")
+    @DisplayName("Exit personal account")
     public void checkExitTest() {
         objLoginPage.login(email, password);
         objStartPage.checkPersonalArea();
@@ -58,7 +55,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("Выход на стартовую страницу из личного кабинета ")
+    @DisplayName("Exit to start page from personal account")
     public void checkLogoTest() {
         objLoginPage.login(email, password);
         objStartPage.checkPersonalArea();
@@ -68,7 +65,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("Выход из личного кабинета в конструктор")
+    @DisplayName("Exit from your personal account to constructor")
     public void checkConstructorTest() {
         objLoginPage.login(email, password);
         objStartPage.checkPersonalArea();
@@ -78,6 +75,9 @@ public class UserTest {
     }
     @After
     public void teardown() {
+        if (accessToken != null) {
+            UserData.deleteUser(accessToken);
+        }
         driver.quit();
     }
 }

@@ -8,31 +8,32 @@ import pageobject.StartPage;
 
 import static org.junit.Assert.assertTrue;
 public class ConstructorTest {
-    WebDriverCreator webDriverCreator = new WebDriverCreator();
     private StartPage objStartPage;
     private WebDriver driver;
+    String accessToken;
+
     @Before
     public void before() {
-        driver = webDriverCreator.createWebDriver();
+        driver = WebDriverCreator.createWebDriver();
         objStartPage = new StartPage(driver);
     }
 
     @Test
-    @DisplayName("Открытие раздела <Конструктор>")
+    @DisplayName("Open tab Sauce")
     public void checkSauce() {
         objStartPage.openStartPage();
         assertTrue("Ошибка", objStartPage.checkSauce());
     }
 
     @Test
-    @DisplayName("Открытие раздела <Булки>")
+    @DisplayName("Open tab Buns")
     public void checkBuns() {
         objStartPage.openStartPage();
         assertTrue("Ошибка", objStartPage.checkBuns());
     }
 
     @Test
-    @DisplayName("Раздел <Конструктор> на главной странице")
+    @DisplayName("Open tab Fillings")
     public void checkFillings() {
         objStartPage.openStartPage();
         assertTrue("Ошибка", objStartPage.checkFillings());
@@ -40,6 +41,9 @@ public class ConstructorTest {
 
     @After
     public void teardown() {
-        driver.quit();
+        if (accessToken != null) {
+            UserData.deleteUser(accessToken);
+        }
+           driver.quit();
     }
 }

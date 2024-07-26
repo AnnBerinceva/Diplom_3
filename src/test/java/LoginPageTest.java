@@ -11,17 +11,16 @@ import pageobject.StartPage;
 import static org.junit.Assert.assertEquals;
 
 public class LoginPageTest {
-    WebDriverCreator webDriverCreator = new WebDriverCreator();
-
     private RegisterPage objRegisterPage;
     private LoginPage objLoginPage;
     private WebDriver driver;
     private String email;
     private String password;
+    String accessToken;
 
    @Before
     public void before() {
-       driver = webDriverCreator.createWebDriver();
+       driver = WebDriverCreator.createWebDriver();
 
        UserData userData = new UserData();
        String name = userData.getRandomName();
@@ -33,7 +32,7 @@ public class LoginPageTest {
     }
 
     @Test
-    @DisplayName("Вход в личный кабинет через кнопку <Войти в аккаунт> на стартовой странице")
+    @DisplayName("Login to personal account on the start page")
     public void startPageTest() {
         StartPage objStartPage = new StartPage(driver);
         objStartPage.openStartPage();
@@ -43,7 +42,7 @@ public class LoginPageTest {
         assertEquals("Ошибка", "Войти", objStartPage.checkOrderButton());
     }
     @Test
-    @DisplayName("<Личный кабинет> на стартовой странице")
+    @DisplayName("Personal account on the start page")
     public void personalAccountTest() {
         StartPage objStartPage = new StartPage(driver);
         objStartPage.openStartPage();
@@ -54,7 +53,7 @@ public class LoginPageTest {
     }
 
     @Test
-    @DisplayName("Логин пользователя через ссылку на странице регистрации")
+    @DisplayName("User login via the link on the registration page")
     public void registrationLinkTest() {
         objRegisterPage.openRegisterPage();
         objRegisterPage.clickAuthLinkLogin();
@@ -65,7 +64,7 @@ public class LoginPageTest {
     }
 
     @Test
-    @DisplayName("Авторизация на странице сброса пароля")
+    @DisplayName("Login on the password reset page")
     public void restorePasswordLinkTest() {
         ForgotPasswordPage objForgotPasswordPage = new ForgotPasswordPage(driver);
         objForgotPasswordPage.openRestorePage();
@@ -77,6 +76,9 @@ public class LoginPageTest {
     }
     @After
     public void teardown() {
-       driver.quit();
+        if (accessToken != null) {
+            UserData.deleteUser(accessToken);
+        }
+        driver.quit();
     }
 }

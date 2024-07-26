@@ -24,7 +24,6 @@ public class StartPage {
     private final By personalAreaButton = By.xpath(".//*[text() = 'Личный Кабинет']"); //кнопка "Личный Кабинет"
 
     private final By bunsButton = By.xpath(".//span[text()='Булки']/.."); //вкладка "Булки"
-    private final By  nameBuns = By.xpath(".//section[1]/div[2]/h2[1]"); //название "Булки"
 
     private final By sauceButton = By.xpath("//span[text()='Соусы']/.."); //вкладка "Соусы"
     private final By nameSauce = By.xpath(".//section[1]/div[2]/h2[2]"); //название "Соусы"
@@ -33,6 +32,7 @@ public class StartPage {
     private final By nameFilling = By.xpath(".//section[1]/div[2]/h2[3]"); //название "Начинки"
 
     private final By orderButton = By.className("button_button__33qZ0"); //кнопка "Оформить заказ"
+    private final By fluorescentBun = By.xpath(".//p[text() = 'Флюоресцентная булка R2-D3']");
 
     @Step("Открыть главную страницу")
     public void openStartPage (){
@@ -68,11 +68,11 @@ public class StartPage {
         return textButton.getText();
     }
 
-    @Step("Открытие вкладки с начинками")
+    @Step("Открытие вкладки с булками")
     public boolean checkBuns() {
-        driver.findElement(fillingButton).click();
-        driver.findElement(bunsButton).click(); //вернуться к вкладке с булками
-        return driver.findElement(nameBuns).isDisplayed();
+        driver.findElement(fillingButton).click(); //перешли на вкладку начинки
+        driver.findElement(bunsButton).click(); //кликаем по булкам
+        return driver.findElement(fluorescentBun).isDisplayed(); //проверяем, что отображается Флюоресцентная булка
     }
     @Step("Открытие вкладки с соусами")
     public boolean checkSauce() {

@@ -17,9 +17,6 @@ public class StartPage {
         this.driver = driver;
     }
 
-    public WebDriver getDriver() {
-        return driver;
-    }
     private final By loginAccountButton = By.xpath(".//*[text() = 'Войти в аккаунт']"); //кнопка "Войти в аккаунт"
     private final By personalAreaButton = By.xpath(".//*[text() = 'Личный Кабинет']"); //кнопка "Личный Кабинет"
 
@@ -70,8 +67,9 @@ public class StartPage {
 
     @Step("Открытие вкладки с булками")
     public boolean checkBuns() {
-        driver.findElement(fillingButton).click(); //перешли на вкладку начинки
-        driver.findElement(bunsButton).click(); //кликаем по булкам
+        driver.findElement(sauceButton).click(); //перешли на вкладку с соусами
+        driver.findElement(fillingButton).click(); //перешли на вкладку с начинками
+        driver.findElement(bunsButton).click(); //перешли на вкладку с булками
         return driver.findElement(fluorescentBun).isDisplayed(); //проверяем, что отображается Флюоресцентная булка
     }
     @Step("Открытие вкладки с соусами")

@@ -23,13 +23,14 @@ public class StartPage {
     private final By bunsButton = By.xpath(".//span[text()='Булки']/.."); //вкладка "Булки"
 
     private final By sauceButton = By.xpath("//span[text()='Соусы']/.."); //вкладка "Соусы"
-    private final By nameSauce = By.xpath(".//section[1]/div[2]/h2[2]"); //название "Соусы"
 
     private final By fillingButton = By.xpath("//span[text()='Начинки']/.."); //вкладка "Начинки"
-    private final By nameFilling = By.xpath(".//section[1]/div[2]/h2[3]"); //название "Начинки"
 
     private final By orderButton = By.className("button_button__33qZ0"); //кнопка "Оформить заказ"
-    private final By fluorescentBun = By.xpath(".//p[text() = 'Флюоресцентная булка R2-D3']");
+
+    private final By bunElement = By.xpath(".//*/div[@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']/span[text()='Булки']");
+    private final By sauceElement = By.xpath(".//*/div[@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']/span[text()='Соусы']");
+    private final By fillingElement = By.xpath(".//*/div[@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']/span[text()='Начинки']");
 
     @Step("Открыть главную страницу")
     public void openStartPage (){
@@ -67,20 +68,19 @@ public class StartPage {
 
     @Step("Открытие вкладки с булками")
     public boolean checkBuns() {
-        driver.findElement(sauceButton).click(); //перешли на вкладку с соусами
-        driver.findElement(fillingButton).click(); //перешли на вкладку с начинками
-        driver.findElement(bunsButton).click(); //перешли на вкладку с булками
-        return driver.findElement(fluorescentBun).isDisplayed(); //проверяем, что отображается Флюоресцентная булка
+        driver.findElement(sauceButton).click();
+        driver.findElement(bunsButton).click();
+        return driver.findElement(bunElement).isDisplayed();
     }
     @Step("Открытие вкладки с соусами")
     public boolean checkSauce() {
         driver.findElement(sauceButton).click();
-        return driver.findElement(nameSauce).isDisplayed();
+        return driver.findElement(sauceElement).isDisplayed();
     }
 
     @Step("Открытие вкладки с начинками")
     public boolean checkFillings() {
         driver.findElement(fillingButton).click();
-        return driver.findElement(nameFilling).isDisplayed();
+        return driver.findElement(fillingElement).isDisplayed();
     }
 }
